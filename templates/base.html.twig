@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta name="description" content="">
+    <title>{% block title %}Platform - Jobs{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block stylesheets %}{% endblock %}
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Google font-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
+</head>
+<body>
+{% block body %}{% endblock %}
+<!-- Navbar-->
+<header class="app-header">
+    <a class="app-header__logo" href="{{ path('job_index') }}"><i class="fa fa-rocket pr-1"></i>Platform-jobs</a>
+</header>
+<!-- Sidebar menu-->
+<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+<div class="app-content">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                <div class="tile-body grey"><h4>{% block title_content %}Liste des offres{% endblock %}</h4></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="tile">
+                <div class="tile-body">
+                    {% block panel_container %}
+                    <form action="">
+                        <h5 class="tile-title green">FILTRER LES RÉSULTATS</h5>
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="{{ constant('PARAMETER_QUERY', search) }}" id="inputSearch" placeholder="Intitulé du poste">
+                        </div>
+                        <h5 class="tile-title green">Type de contrat</h5>
+                        <div class="form-group form-separator grey">
+                            {% for key, contract in constant('CONTRACTS', search) %}
+                                <div class="form-check">
+                                    <label for="idTypeContract_{{ loop.index0 }}" class="form-check-label">
+                                        <input class="form-check-input" id="idTypeContract_{{ loop.index0 }}" name="contract[]" value="{{ contract }}" type="checkbox">{{ key }}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <h5 class="tile-title green">Offres créées depuis</h5>
+                        <div class="form-group form-separator grey">
+                            {% for key, issue_date in constant('ISSUE_DATES', search) %}
+                                <div class="form-check">
+                                    <label for="idIssueDate_{{ loop.index0 }}" class="form-check-label">
+                                        <input class="form-check-input" id="idIssueDate_{{ loop.index0 }}" value="{{ issue_date }}" type="radio" name="issueDate">{{ key }}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div>
+                            <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-search"></i>Rechercher</button>
+                        </div>
+                    </form>
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+        {% block main_content %}
+        <div class="col-md-9">
+            <div class="row">
+                    {% if results is empty %}
+                        <h5 class="tile-title green">Aucun résultat pour ces critères de recherche.</h5>
+                    {% else %}
+                        {% for job in results %}
+                            {% include 'job/_job.html.twig' %}
+                        {% endfor %}
+                    {% endif %}
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+</div>
+
+{% block javascripts %}{% endblock %}
+<!-- Essential javascripts for application to work-->
+<script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
+<script src="{{ asset('js/popper.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/main.js') }}"></script>
+<!-- The javascript plugin to display page loading on top
+<script src="{{ asset('js/plugins/pace.min.js') }}"></script>
+-->
+</body>
+</html>

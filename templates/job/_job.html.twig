@@ -1,0 +1,11 @@
+<div class="col-md-4">
+    <div class="tile">
+        <div class="tile-header">
+            <h5 class="tile-title grey">{{ job.title }}</h5>
+            <span class="text-muted"><i class="fa fa-clock-o fa-lg green pr-1"></i>Publié {{ job.publishedAt | ago }}</span>
+        </div>
+        <div class="tile-body">{{ job.resumeDescription | nl2br }}</div>
+        <div class="tile-location grey"><span><i class="fa fa-map-marker fa-lg pr-1"></i>{{ job.location }}</span><span class="ml-3"><i class="fa fa-file-text-o fa-lg pr-1"></i>{{ job.contract | upper }}</span></div>
+        <div class="tile-footer"><a class="btn btn-primary" href="{{ path('job_show', {slug: job.slug}) }}">Voir l'offre</a></div>
+    </div>
+</div>

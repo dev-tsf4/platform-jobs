@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title_content %}Détail de l'offre{% endblock %}
+
+{% block panel_container %}
+    <a href="{{ path('job_index') }}"><h5 class="tile-title green">Retour aux offres</h5></a>
+{% endblock %}
+
+{% block main_content %}
+<div class="col-md-6">
+    <div class="tile">
+        <div class="tile-body">
+            <h3 class="tile-title green">{{ job.title | upper }}</h3>
+            <div class="tile-location-show grey"><span><i class="fa fa-map-marker fa-lg pr-1"></i>{{ job.location }}</span><span class="ml-3"><i class="fa fa-file-text-o fa-lg pr-1"></i>{{ job.contract | upper }}</span></div>
+            <div class="mt-5">
+                <h4 class="tile-title green">Descriptif du poste</h4>
+                {{ job.description | markdown }}
+                <h4 class="tile-title green">Profil recherché</h4>
+                {{ job.profile | markdown }}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
